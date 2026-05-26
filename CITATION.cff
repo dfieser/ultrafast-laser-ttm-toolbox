@@ -5,6 +5,8 @@ type: software
 authors:
   - family-names: "Fieser"
     given-names: "David"
+    affiliation: "Department of Mechanical and Aerospace Engineering, University of Tennessee, Knoxville, 1512 Middle Drive, Knoxville, TN 37996, USA"
+    orcid: "https://orcid.org/0009-0007-5754-4331"
 version: "0.1.0"
 date-released: 2026-05-25
 doi: "10.5281/zenodo.20389306"

@@ -203,6 +203,16 @@ If this repository contributes to published work, please cite the software recor
 - Concept DOI (latest release): `10.5281/zenodo.20389305`
 - Version DOI (`v0.1.0`): `10.5281/zenodo.20389306`
 
+## Acknowledgments and Funding
+
+This work was supported by the National Science Foundation under Award No. CMMI-2412544, Collaborative Research: Additive Manufacturing of Crack-Free Tungsten Using Ultrashort Pulsed Lasers (PI: Dr. Anming Hu, Division of Civil, Mechanical, and Manufacturing Innovation, NSF Program: AM-Advanced Manufacturing).
+
+The authors gratefully acknowledge Drs. Yanfei Gao, Wenda Tan, and Seungha Shin for their contributions and collaboration on this project.
+
+Additional support was provided by the University of Tennessee, Knoxville, through a hiring package. D.F. gratefully acknowledges support from the UTK 100 Talented PhD Scholarship.
+
+Support for the Center for Materials Processing from the State of Tennessee and the Tennessee Higher Education Commission is also gratefully acknowledged.
+
 ## Contributing
 
 For small fixes, documentation improvements, and workflow polish, see `CONTRIBUTING.md`.

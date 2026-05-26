@@ -1,5 +1,7 @@
 # Ultrafast Laser TTM Toolbox
 
+[![DOI](https://zenodo.org/badge/1249804402.svg)](https://doi.org/10.5281/zenodo.20389305)
+
 This folder is a clean staging copy for a public repository built from the reusable parts of the original workspace. The goal is to preserve the core modeling functionality while removing project-specific clutter such as manuscript validation campaigns, archived backups, and generated result folders.
 
 The codebase centers on MATLAB solvers for pulsed-laser heating in metals using two-temperature-model workflows. The staged version is still tungsten-oriented in its defaults, but the structure is intended to be reusable for other materials, pulse widths, spot sizes, repetition rates, and scanning conditions.
@@ -197,6 +199,9 @@ This repository is released under the MIT License. See `LICENSE`.
 ## Citation
 
 If this repository contributes to published work, please cite the software record in `CITATION.cff`.
+
+- Concept DOI (latest release): `10.5281/zenodo.20389305`
+- Version DOI (`v0.1.0`): `10.5281/zenodo.20389306`
 
 ## Contributing
 

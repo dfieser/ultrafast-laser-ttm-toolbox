@@ -7,6 +7,7 @@ authors:
     given-names: "David"
 version: "0.1.0"
 date-released: 2026-05-25
+doi: "10.5281/zenodo.20389306"
 license: "MIT"
 repository-code: "https://github.com/dfieser/ultrafast-laser-ttm-toolbox"
 url: "https://github.com/dfieser/ultrafast-laser-ttm-toolbox"

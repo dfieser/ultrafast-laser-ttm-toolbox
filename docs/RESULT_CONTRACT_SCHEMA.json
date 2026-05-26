@@ -1,0 +1,124 @@
+{
+  "contractVersion": "v1",
+  "sharedFields": [
+    "solver",
+    "solverId",
+    "contractVersion",
+    "material",
+    "outputFile",
+    "outputDir",
+    "inputConfig"
+  ],
+  "optionalSharedFields": [
+    "nPulses",
+    "wallTime_s",
+    "depthResults",
+    "depthOutputFile"
+  ],
+  "solvers": {
+    "surface_point": {
+      "entryFile": "src/Surface_Point_Solver.m",
+      "inputStyle": "cfg struct",
+      "requiredFields": [
+        "solver",
+        "solverId",
+        "contractVersion",
+        "material",
+        "outputFile",
+        "outputDir",
+        "inputConfig",
+        "peakTe_C",
+        "peakTl_C",
+        "finalResid_C"
+      ]
+    },
+    "depth_profile": {
+      "entryFile": "src/Depth_Profile_Solver.m",
+      "inputStyle": "cfg struct",
+      "requiredFields": [
+        "solver",
+        "solverId",
+        "contractVersion",
+        "material",
+        "outputFile",
+        "outputDir",
+        "inputConfig",
+        "nPulses",
+        "wallTime_s",
+        "peakTe_C",
+        "peakTl_C",
+        "finalResid_C"
+      ]
+    },
+    "radial_profile": {
+      "entryFile": "src/Radial_Profile_Solver.m",
+      "inputStyle": "cfg struct",
+      "requiredFields": [
+        "solver",
+        "solverId",
+        "contractVersion",
+        "material",
+        "outputFile",
+        "outputDir",
+        "inputConfig",
+        "nPulses",
+        "wallTime_s",
+        "peakTeq_C",
+        "finalResid_C"
+      ]
+    },
+    "single_pulse": {
+      "entryFile": "src/Single_Pulse_Visualizer.m",
+      "inputStyle": "cfg struct",
+      "requiredFields": [
+        "solver",
+        "solverId",
+        "contractVersion",
+        "material",
+        "outputFile",
+        "outputDir",
+        "inputConfig",
+        "wallTime_s",
+        "peakTe_C",
+        "peakTl_C"
+      ]
+    },
+    "inversion_quantifier": {
+      "entryFile": "src/Inversion_Quantifier.m",
+      "inputStyle": "cfg struct",
+      "requiredFields": [
+        "solver",
+        "solverId",
+        "contractVersion",
+        "material",
+        "outputFile",
+        "outputDir",
+        "nPulses",
+        "wallTime_s",
+        "meanInv_K",
+        "maxInv_K",
+        "finalResid_C"
+      ],
+      "optionalFields": [
+        "depthResults",
+        "depthOutputFile"
+      ]
+    },
+    "scanning_beam": {
+      "entryFile": "src/Scanning_Beam_Solver.m",
+      "inputStyle": "params struct with optional outputDir and savePlots",
+      "requiredFields": [
+        "solver",
+        "solverId",
+        "contractVersion",
+        "material",
+        "outputFile",
+        "outputDir",
+        "inputConfig",
+        "nPulses",
+        "wallTime_s",
+        "peakT_history"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this repository in published work, please cite it using this metadata."
+title: "Ultrafast Laser TTM Toolbox"
+type: software
+authors:
+  - family-names: "Fieser"
+    given-names: "David"
+version: "0.1.0"
+date-released: 2026-05-25
+license: "MIT"
+repository-code: "https://github.com/dfieser/ultrafast-laser-ttm-toolbox"
+url: "https://github.com/dfieser/ultrafast-laser-ttm-toolbox"
+abstract: >-
+  MATLAB solvers for ultrafast pulsed-laser heating and two-temperature-model
+  studies, including surface-point, depth-profile, radial-profile,
+  inversion-analysis, and scanning-beam workflows.
+keywords:
+  - "MATLAB"
+  - "two-temperature model"
+  - "ultrafast laser"
+  - "pulsed laser"
+  - "thermal modeling"
+  - "heat transfer"

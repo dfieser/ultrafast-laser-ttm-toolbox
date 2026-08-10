@@ -2,13 +2,13 @@
 
 [![DOI](https://zenodo.org/badge/1249804402.svg)](https://doi.org/10.5281/zenodo.20389305)
 
-This folder is a clean staging copy for a public repository, built from the reusable parts of the original workspace. It preserves the core modeling functionality and leaves out project-specific clutter: manuscript validation campaigns, archived backups, and generated result folders.
+This repository is the public release of the reusable parts of a larger research workspace. It preserves the core modeling functionality and leaves out project-specific clutter: manuscript validation campaigns, archived backups, and generated result folders.
 
 The codebase centers on MATLAB solvers for pulsed-laser heating in metals, built around two-temperature model (TTM) workflows. The defaults are still tungsten-oriented, but the structure is designed for reuse with other materials, pulse widths, spot sizes, repetition rates, and scanning conditions.
 
 ## Repository Purpose
 
-This staging copy is a candidate for a portable, public-facing repository. Its priorities:
+The repository aims to stay portable and public-facing. Its priorities:
 
 - keep the general solver stack
 - keep a small number of reusable batch entry points
@@ -21,7 +21,7 @@ This staging copy is a candidate for a portable, public-facing repository. Its p
 
 The repository is shaped so coding agents can work in it reliably. Agent support is a design goal, not an accident.
 
-Agent-friendly features already present in the staged copy:
+Agent-friendly features already present:
 
 - relative-path output handling instead of machine-local hardcoded paths
 - solver code concentrated in `src/` rather than scattered across output or archive folders
@@ -76,7 +76,7 @@ Design choice for the 0D solver:
 
 ## What Was Left Out
 
-The following content was intentionally excluded from the staged public-repo copy:
+The following content was intentionally excluded from the public release:
 
 - manuscript-specific batch orchestration
 - validation plans tied to one experimental study
@@ -89,7 +89,7 @@ This is a scope decision, not a claim that the removed content is unimportant. T
 ## Folder Layout
 
 ```text
-Public_Repo_Staging/
+ultrafast-laser-ttm-toolbox/
   src/              % reusable solver functions
   examples/         % editable single-run examples
   scripts/
@@ -100,7 +100,7 @@ Public_Repo_Staging/
   outputs/          % default destination for generated results
 ```
 
-All staged scripts now write default results into `outputs/` at the repository root rather than into the original local workspace layout.
+All scripts write default results into `outputs/` at the repository root rather than into the original local workspace layout.
 
 ## How To Start
 
@@ -172,7 +172,7 @@ For a new user, the most sensible progression is:
 
 ## Design Context
 
-The staged repository is broader than the manuscript that motivated some of the original work. The intent is not to freeze the code around one experiment, one material, or one laser system. The current defaults reflect the original development history. The solver concepts apply to broader pulsed-laser thermal studies, provided the underlying assumptions remain appropriate.
+The repository is broader than the manuscript that motivated some of the original work. The intent is not to freeze the code around one experiment, one material, or one laser system. The current defaults reflect the original development history. The solver concepts apply to broader pulsed-laser thermal studies, provided the underlying assumptions remain appropriate.
 
 Areas that are most likely to need user adaptation include:
 
@@ -184,13 +184,24 @@ Areas that are most likely to need user adaptation include:
 
 ## Outputs And Reproducibility
 
-The scripts write generated files to `outputs/` by default. The staged layout keeps that folder because the scripts expect a writable destination, but version control excludes the generated results themselves.
+The scripts write generated files to `outputs/` by default. The repository keeps that folder because the scripts expect a writable destination, but version control excludes the generated results themselves.
 
-If this staging copy becomes the actual public repository, a later cleanup pass should likely add:
+Future cleanup passes should likely add:
 
 - a small set of canonical example cases
 - a concise result interpretation guide
 - stronger input validation for public users
+
+## Versioning
+
+The version number lives in one place: the `VERSION` file at the repository root. `CITATION.cff` and `.zenodo.json` must state the same version, and the release workflow checks that they do. In MATLAB, `Toolbox_Version()` returns the same string.
+
+To publish a new version:
+
+1. Update `VERSION`, the `version` fields in `CITATION.cff` and `.zenodo.json`, and `date-released` in `CITATION.cff`.
+2. Push to `main`.
+
+The workflow in `.github/workflows/release.yml` then tags the commit and creates a GitHub release. Zenodo archives the release and mints a new version DOI automatically.
 
 ## License
 
@@ -200,8 +211,8 @@ This repository is released under the MIT License. See `LICENSE`.
 
 If this repository contributes to published work, please cite the software record in `CITATION.cff`.
 
-- Concept DOI (latest release): `10.5281/zenodo.20389305`
-- Version DOI (`v0.1.0`): `10.5281/zenodo.20389306`
+- Concept DOI (always resolves to the latest release): `10.5281/zenodo.20389305`
+- Each GitHub release receives its own version DOI on Zenodo.
 
 ## Acknowledgments and Funding
 
@@ -226,7 +237,7 @@ For small fixes, documentation improvements, and workflow polish, see `CONTRIBUT
 
 ## Related Documentation
 
-- Curation history for this staging repository: `docs/REPOSITORY_NOTES.md` and `docs/PROJECT_CONTEXT.md`
+- Curation history for this repository: `docs/REPOSITORY_NOTES.md` and `docs/PROJECT_CONTEXT.md`
 - Example selection and starter workflows: `examples/README.md`
 - Validation workflow: `docs/VALIDATION_GUIDE.md`
 - Agent-specific editing and maintenance guidance: `AGENTS.md`, `docs/AGENT_QUICKSTART.md`, and `docs/RESULT_CONTRACT_SCHEMA.json`

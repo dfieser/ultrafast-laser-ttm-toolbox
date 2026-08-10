@@ -1,6 +1,6 @@
 # Project Context
 
-This staging copy comes from a larger research workspace for pulsed-laser thermal modeling in MATLAB. The original workspace mixed several kinds of content:
+This repository was curated from a larger research workspace for pulsed-laser thermal modeling in MATLAB. The original workspace mixed several kinds of content:
 
 - core solver code
 - batch automation for broad parameter sweeps
@@ -8,7 +8,7 @@ This staging copy comes from a larger research workspace for pulsed-laser therma
 - archived backups and duplicate files
 - generated outputs from many runs
 
-For a public repository, that mixture is not ideal. This staged copy exists to separate the reusable modeling core from the research-history residue.
+For a public repository, that mixture is not ideal. This repository separates the reusable modeling core from the research-history residue.
 
 ## Conceptual Scope
 
@@ -56,11 +56,11 @@ Some of the original work was organized around one manuscript and its validation
 - buries the reusable solver entry points under study-specific orchestration
 - encourages users to treat one validation campaign as the only intended use case
 
-The staging copy therefore keeps the general solver capabilities and leaves the manuscript-specific automation behind.
+The public repository therefore keeps the general solver capabilities and leaves the manuscript-specific automation behind.
 
 ## Solver Relationship Overview
 
-Think of the staged files in layers:
+Think of the files in layers:
 
 1. simple pulse-level or point-level inspection
 2. depth-resolved or radial thermal modeling
@@ -85,7 +85,7 @@ The code still reflects modeling assumptions that may not fit a future use case,
 
 ## Recommended Direction For Future Cleanup
 
-If this becomes an active public repository, the best long-term direction would be to shift from research-script organization toward clearer public structure:
+As the repository matures, the best long-term direction is to shift from research-script organization toward clearer public structure:
 
 - common configuration conventions across solvers
 - fewer duplicated helper patterns

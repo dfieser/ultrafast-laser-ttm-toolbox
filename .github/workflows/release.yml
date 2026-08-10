@@ -1,0 +1,41 @@
+name: Release on version bump
+
+# When a push to main changes the VERSION file, this workflow tags the commit
+# and creates a GitHub release. The GitHub-Zenodo integration then archives
+# the release and mints a new version DOI automatically.
+
+on:
+  push:
+    branches: [main]
+    paths: [VERSION]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version
+        id: v
+        run: echo "version=$(tr -d ' \n\r' < VERSION)" >> "$GITHUB_OUTPUT"
+
+      - name: Check metadata files match VERSION
+        run: |
+          v="${{ steps.v.outputs.version }}"
+          grep -q "^version: \"$v\"" CITATION.cff || {
+            echo "CITATION.cff version does not match VERSION ($v). Update it and push again."; exit 1; }
+          grep -q "\"version\": \"$v\"" .zenodo.json || {
+            echo ".zenodo.json version does not match VERSION ($v). Update it and push again."; exit 1; }
+
+      - name: Create release if tag is new
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v="${{ steps.v.outputs.version }}"
+          if gh release view "v$v" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release v$v already exists; nothing to do."
+          else
+            gh release create "v$v" --repo "$GITHUB_REPOSITORY" --title "v$v" --generate-notes
+          fi

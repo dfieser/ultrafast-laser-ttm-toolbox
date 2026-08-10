@@ -1,6 +1,6 @@
 # Validation Guide
 
-This document defines a lightweight validation workflow for the staged public repository.
+This document defines a lightweight validation workflow for the repository.
 
 The workflow is intentionally simple. The goal is not to scientifically verify every physics assumption. It is to confirm, repeatably, that the public-facing solver surfaces and example entry points still behave coherently after cleanup work.
 

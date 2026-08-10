@@ -1,6 +1,6 @@
 # Agent Guidance
 
-This file gives repository-specific guidance to coding agents and automated assistants working in this staged MATLAB repository.
+This file gives repository-specific guidance to coding agents and automated assistants working in this MATLAB repository.
 
 ## Primary Goal
 
@@ -53,7 +53,8 @@ The machine-readable companion note for this contract lives in `docs/RESULT_CONT
 - separation between reusable code and generated outputs
 - separation between reusable solver code and editable examples
 - generalized wording in documentation where possible
-- the current staging decision to avoid manuscript-bound repo structure
+- the curation decision to avoid manuscript-bound repo structure
+- version consistency: the `VERSION` file, `CITATION.cff`, and `.zenodo.json` must state the same version; bumping `VERSION` on `main` triggers a GitHub release and a new Zenodo version DOI
 
 ## What To Avoid
 
@@ -111,4 +112,4 @@ Prefer additions that make the repo easier for an outside user to understand:
 - lightweight validation examples that are generic rather than manuscript-bound
 - agent-facing repo maps, workflows, or maintenance guidance when they improve automation reliability
 
-If a proposed change mainly serves one historical study, it probably does not belong in this staged public-facing copy.
+If a proposed change mainly serves one historical study, it probably does not belong in this public-facing repository.

@@ -7,9 +7,9 @@ authors:
     given-names: "David"
     affiliation: "Department of Mechanical and Aerospace Engineering, University of Tennessee, Knoxville, 1512 Middle Drive, Knoxville, TN 37996, USA"
     orcid: "https://orcid.org/0009-0007-5754-4331"
-version: "0.1.0"
-date-released: 2026-05-25
-doi: "10.5281/zenodo.20389306"
+version: "0.2.0"
+date-released: 2026-08-09
+doi: "10.5281/zenodo.20389305"
 license: "MIT"
 repository-code: "https://github.com/dfieser/ultrafast-laser-ttm-toolbox"
 url: "https://github.com/dfieser/ultrafast-laser-ttm-toolbox"

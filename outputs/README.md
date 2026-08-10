@@ -8,4 +8,4 @@ This folder is the default destination for generated text files, figures, and ba
 - do not commit generated run results, smoke-test artifacts, or machine-specific output snapshots
 - preserve `.gitkeep` and this file so the folder remains visible in a clean clone
 
-If you want to inspect current solver behavior, generate fresh outputs locally by running the examples or `scripts/Verify_Public_Repo_Smoke.m`.
+To inspect current solver behavior, generate fresh outputs locally by running the examples or `scripts/Verify_Public_Repo_Smoke.m`.

@@ -2,7 +2,7 @@
 
 This document defines a lightweight validation workflow for the staged public repository.
 
-It is intentionally simple. The goal is not exhaustive scientific verification of every physics assumption, but a repeatable way to confirm that the public-facing solver surfaces and example entry points still behave coherently after cleanup work.
+The workflow is intentionally simple. The goal is not to scientifically verify every physics assumption. It is to confirm, repeatably, that the public-facing solver surfaces and example entry points still behave coherently after cleanup work.
 
 ## Validation Strategy
 
@@ -27,7 +27,7 @@ They are suitable because they:
 ### General checks for every run
 
 - the script runs without path errors
-- outputs are written into `outputs/` rather than a machine-local folder
+- the script writes outputs into `outputs/` rather than a machine-local folder
 - the returned `results` struct is created
 - the shared result-contract fields are present where expected
 
@@ -76,7 +76,7 @@ Check that:
 
 ## Manual MATLAB Spot Check
 
-After running an example, a minimal sanity check can be done in MATLAB with statements like:
+After running an example, run a minimal sanity check in MATLAB with statements like:
 
 ```matlab
 isfield(results, 'solverId')
@@ -98,7 +98,7 @@ This guide does not prove:
 - manuscript-level validation against experiments
 - numerical optimality of every discretization choice
 
-It is a repo-maintenance guide, not a substitute for scientific validation.
+This is a repo-maintenance guide, not a substitute for scientific validation.
 
 ## When To Extend This Guide
 

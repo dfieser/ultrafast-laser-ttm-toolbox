@@ -26,4 +26,4 @@ Thanks for your interest in improving this repository.
 
 ## Scope guidance
 
-This repository is meant to stay centered on reusable pulsed-laser thermal modeling workflows. Changes that mainly serve one historical study or one manuscript-specific validation campaign should generally stay out of the public-facing copy.
+This repository stays centered on reusable pulsed-laser thermal modeling workflows. Changes that mainly serve one historical study, or one manuscript-specific validation campaign, generally belong outside the public-facing copy.

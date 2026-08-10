@@ -13,7 +13,7 @@ This folder contains small, editable entry-point scripts for common starting wor
 4. `Example_Scanning_Beam_Baseline.m`
    Use this for a moving-beam process example.
 
-`Scanning_Beam_Single_Run.m` is retained as a legacy alias so older notes and commands still work.
+`Scanning_Beam_Single_Run.m` remains as a legacy alias so older notes and commands still work.
 
 ## Editing pattern
 

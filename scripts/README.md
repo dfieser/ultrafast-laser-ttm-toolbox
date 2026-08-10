@@ -4,8 +4,8 @@ This folder contains reusable repository-level entry points that are broader tha
 
 ## Included entry points
 
-- `Verify_Public_Repo_Smoke.m` - lightweight runtime smoke test for the supported public-facing solver surfaces
-- `batch/` - reusable multi-case study runners and parameter sweeps
+- `Verify_Public_Repo_Smoke.m`: lightweight runtime smoke test for the supported public-facing solver surfaces
+- `batch/`: reusable runners for multi-case studies and parameter sweeps
 
 ## Recommended use
 

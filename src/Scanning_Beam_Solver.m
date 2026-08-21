@@ -202,14 +202,16 @@ function results = Scanning_Beam_Solver(params, outputDir, savePlots)
     dm_A = (1 + rDiff) * ones(n_cn, 1);   % main diagonal (implicit)
     dl_A = (-rDiff/2)  * ones(n_cn, 1);   % lower diagonal
     du_A = (-rDiff/2)  * ones(n_cn, 1);   % upper diagonal
-    du_A(1) = -rDiff;                      % Neumann BC at surface
     A_cn = spdiags([dl_A, dm_A, du_A], [-1 0 1], n_cn, n_cn);
+    A_cn(1, 2) = -rDiff;                   % Neumann BC at surface
+    %  NOTE: spdiags drops the first element of a super-diagonal vector, so
+    %  the BC must be assigned directly; du_A(1) would silently be ignored.
 
     dm_B = (1 - rDiff) * ones(n_cn, 1);   % main diagonal (explicit)
     dl_B = (rDiff/2)   * ones(n_cn, 1);
     du_B = (rDiff/2)   * ones(n_cn, 1);
-    du_B(1) = rDiff;                       % Neumann BC at surface
     B_cn = spdiags([dl_B, dm_B, du_B], [-1 0 1], n_cn, n_cn);
+    B_cn(1, 2) = rDiff;                    % Neumann BC at surface
 
     bvec_cn = zeros(n_cn, 1);
     bvec_cn(end) = rDiff * T0;             % fixed-T boundary at depth
@@ -252,6 +254,12 @@ function results = Scanning_Beam_Solver(params, outputDir, savePlots)
         x_laser = v_scan * (np-1) * Trep;
         Gx = exp(-inv2w2 * (xGrid - x_laser).^2);       % Nx x 1
         Tsurf = Tsurf + dTeq_single * (Gy_gauss * Gx');  % Ny x Nx
+
+        % Record the instantaneous peak (pulse deposit included), before
+        % inter-pulse diffusion relaxes the surface toward the residual.
+        Tpeak_map = max(Tpeak_map, Tsurf);
+        peakSurf = max(Tsurf(:));
+        peakT_history(np) = peakSurf;
 
         % --- Depth diffusion (sparse CN solver) ---
         Tsurf_max = max(Tsurf(:));
@@ -299,10 +307,6 @@ function results = Scanning_Beam_Solver(params, outputDir, savePlots)
 
             Tsurf = Tnew;
         end
-
-        Tpeak_map = max(Tpeak_map, Tsurf);
-        peakSurf = max(Tsurf(:));
-        peakT_history(np) = peakSurf;
 
         if mod(np, progressInterval) == 0 || np == nPulses
             elapsed = toc(ticAll);

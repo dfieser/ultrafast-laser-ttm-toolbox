@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://doi.org/10.1007/s11665-026-14738-6"><img src="https://img.shields.io/badge/Paper-10.1007%2Fs11665--026--14738--6-b31b1b" alt="Paper DOI"></a>
-  <a href="https://doi.org/10.5281/zenodo.20389305"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.20389305.svg" alt="Software DOI"></a>
+  <a href="https://doi.org/10.5281/zenodo.20389305"><img src="https://img.shields.io/badge/Software%20DOI-10.5281%2Fzenodo.20389305-1682D4" alt="Software DOI"></a>
   <a href="https://github.com/dfieser/ultrafast-laser-ttm-toolbox/releases"><img src="https://img.shields.io/github/v/release/dfieser/ultrafast-laser-ttm-toolbox" alt="Latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/MATLAB-no%20toolboxes%20required-orange" alt="MATLAB, no toolboxes required">

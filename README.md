@@ -1,218 +1,186 @@
-# Ultrafast Laser TTM Toolbox
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/banner-dark.png">
+    <img src="docs/assets/banner.png" alt="Ultrafast Laser TTM Toolbox: two-temperature model solvers for femtosecond laser heating of metals" width="100%">
+  </picture>
+</p>
 
-[![DOI](https://zenodo.org/badge/1249804402.svg)](https://doi.org/10.5281/zenodo.20389305)
+<p align="center">
+  <a href="https://doi.org/10.1007/s11665-026-14738-6"><img src="https://img.shields.io/badge/Paper-10.1007%2Fs11665--026--14738--6-b31b1b" alt="Paper DOI"></a>
+  <a href="https://doi.org/10.5281/zenodo.20389305"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.20389305.svg" alt="Software DOI"></a>
+  <a href="https://github.com/dfieser/ultrafast-laser-ttm-toolbox/releases"><img src="https://img.shields.io/github/v/release/dfieser/ultrafast-laser-ttm-toolbox" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/MATLAB-no%20toolboxes%20required-orange" alt="MATLAB, no toolboxes required">
+</p>
 
-This repository is the public release of the reusable parts of a larger research workspace. It preserves the core modeling functionality and leaves out project-specific clutter: manuscript validation campaigns, archived backups, and generated result folders.
+MATLAB solvers for ultrafast pulsed-laser heating of metals, built on the two-temperature model (TTM). The toolbox spans single-pulse electron-lattice dynamics on femtosecond timescales, heat accumulation over thousands of pulses, and moving-beam scans. A two-stage solution strategy keeps multi-pulse simulations fast on a laptop.
 
-The codebase centers on MATLAB solvers for pulsed-laser heating in metals, built around two-temperature model (TTM) workflows. The defaults are still tungsten-oriented, but the structure is designed for reuse with other materials, pulse widths, spot sizes, repetition rates, and scanning conditions.
+The toolbox implements and generalizes the model published in:
 
-## Repository Purpose
+> Fieser, D., Dewanjee, U. N., and Hu, A. (2026). *A Computationally Efficient Two-Stage Two-Temperature Model for Multi-pulse Femtosecond Laser Heat Accumulation in Tungsten*. Journal of Materials Engineering and Performance. [doi:10.1007/s11665-026-14738-6](https://doi.org/10.1007/s11665-026-14738-6)
 
-The repository aims to stay portable and public-facing. Its priorities:
+The defaults reflect the tungsten work in the paper, but material presets (W, Cu, Au, Al) and a `custom` mode support other metals, pulse widths, spot sizes, repetition rates, and scanning conditions.
 
-- keep the general solver stack
-- keep a small number of reusable batch entry points
-- keep enough documentation for another user to understand what each script does
-- make the repository legible to coding agents as well as human users
-- avoid embedding one specific manuscript as the repository's organizing principle
-- avoid shipping generated output data as source content
+## Highlights
 
-## Agent-Friendly Design
+- **Two-stage multi-pulse strategy.** Each pulse period splits into a full electron-lattice TTM solve (`ode15s`) during the pulse and relaxation, then Crank-Nicolson thermal diffusion for the inter-pulse gap. The baseline 50-pulse accumulation run finishes in under a second.
+- **Six solver entry points.** 0D surface point, 1D depth-resolved, radial profile, single-pulse visualization, electron-lattice inversion analysis, and a scanning-beam surface model.
+- **Captures the surface temperature inversion** (lattice hotter than electrons after the pulse), which requires depth resolution and is a focus of the companion paper.
+- **Config-struct interfaces.** Every solver accepts a plain `cfg` struct and returns a results struct with a shared field contract, so runs are easy to script and automate.
+- **Base MATLAB only.** No additional toolboxes are required.
+- **Editable examples and batch runners** for parameter sweeps across power, repetition rate, pulse width, and spot size.
 
-The repository is shaped so coding agents can work in it reliably. Agent support is a design goal, not an accident.
+## Gallery
 
-Agent-friendly features already present:
+All figures below come from the solvers in this repository at their baseline example settings. The generating script is [docs/assets/generate_gallery.m](docs/assets/generate_gallery.m).
 
-- relative-path output handling instead of machine-local hardcoded paths
-- solver code concentrated in `src/` rather than scattered across output or archive folders
-- lightweight editable examples in `examples/` that call into reusable solver functions
-- reusable batch workflows in `scripts/batch/` with shared helper utilities
-- repository-scoped guidance in `AGENTS.md`
-- a dedicated agent quickstart in `docs/AGENT_QUICKSTART.md`
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/fig_single_pulse-dark.png">
+    <img src="docs/assets/fig_single_pulse.png" alt="Electron and lattice surface temperature during one femtosecond pulse in tungsten" width="90%">
+  </picture>
+</p>
+<p align="center"><em>Single-pulse electron-lattice dynamics at the tungsten surface (0D solver): the electron bath spikes above 2600 K within the 500 fs pulse, then equilibrates with the lattice through electron-phonon coupling in a few picoseconds.</em></p>
 
-Design choice for the 0D solver:
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/fig_heat_accumulation-dark.png">
+    <img src="docs/assets/fig_heat_accumulation.png" alt="Multi-pulse heat accumulation in tungsten over 600 pulses" width="90%">
+  </picture>
+</p>
+<p align="center"><em>Multi-pulse heat accumulation (0D solver, 600 pulses at 5 MHz): the equilibrated and residual surface temperatures climb pulse by pulse as heat arrives faster than it diffuses away.</em></p>
 
-- `Surface_Point_Solver.m` remains in `src/`. It now behaves like a supported solver entry point, with a config-struct interface and returned results, rather than a teaching-only script.
+<table align="center">
+  <tr>
+    <td align="center" width="50%">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/assets/fig_scanning_map-dark.png">
+        <img src="docs/assets/fig_scanning_map.png" alt="Peak surface temperature map for a scanning femtosecond laser beam" width="100%">
+      </picture><br>
+      <em>Scanning-beam peak-temperature footprint (40 W, 18 MHz, 1 m/s): accumulation along the scan carries the peak past tungsten's 3422 &deg;C melt point.</em>
+    </td>
+    <td align="center" width="50%">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/assets/fig_radial_profile-dark.png">
+        <img src="docs/assets/fig_radial_profile.png" alt="Radial surface temperature profile under a Gaussian femtosecond laser spot" width="100%">
+      </picture><br>
+      <em>Residual radial temperature profile after 100 pulses under a Gaussian spot.</em>
+    </td>
+  </tr>
+</table>
 
-## What Is Included
+## Getting Started
 
-### Core solvers in `src/`
+**Requirements:** a recent MATLAB release. The solvers use only base MATLAB (`ode15s`, standard array operations), so no toolboxes are needed.
 
-- `Depth_Profile_Solver.m`: 1D depth-resolved multi-pulse TTM solver for coupled electron and lattice temperature evolution through depth
-- `Radial_Profile_Solver.m`: radial surface-profile solver for steady-state or pulse-accumulation style radial temperature studies
-- `Inversion_Quantifier.m`: post-processing and analysis of electron-lattice inversion behavior
-- `Single_Pulse_Visualizer.m`: single-pulse visualization workflow for inspecting early-time temperature evolution
-- `Surface_Point_Solver.m`: reduced 0D surface-point TTM model for simpler studies and quick parameter sweeps
-- `Scanning_Beam_Solver.m`: moving-beam surface scan model with scanning kinematics and diffusion
-
-### Example entry points in `examples/`
-
-- `README.md`: guide to the example scripts and recommended starting order
-- `Example_Surface_Point_Baseline.m`: simplest baseline case using the 0D surface-point solver
-- `Example_Depth_Profile_Baseline.m`: baseline case for the main 1D depth solver
-- `Example_Radial_Profile_Baseline.m`: baseline case for the radial-profile solver
-- `Example_Scanning_Beam_Baseline.m`: canonical moving-beam baseline example
-- `Scanning_Beam_Single_Run.m`: legacy compatibility alias for the scanning-beam example
-
-### Scripts in `scripts/`
-
-- `README.md`: guide to validation and batch-runner entry points
-- `Verify_Public_Repo_Smoke.m`: lightweight runtime smoke test for the public-facing solver surfaces
-
-### Batch runners in `scripts/batch/`
-
-- `Batch_Depth_Profile.m`: generic depth-only parameter sweep entry point
-- `Batch_Multi_Solver_Study.m`: combined depth, radial, single-pulse, and inversion workflow for multi-case studies
-- `Batch_Inversion_Analysis.m`: inversion-analysis batch runner across multiple cases
-- `Batch_Depth_and_Radial_Profile.m`: legacy compatibility alias retained for older workflow references
-
-### Supporting documentation in `docs/`
-
-- `AGENT_QUICKSTART.md`: fast map of the repo for coding agents and automation tools
-- `RESULT_CONTRACT_SCHEMA.json`: machine-readable note describing the shared solver result contract
-- `REPOSITORY_NOTES.md`: repository curation notes and publishing guidance
-- `PROJECT_CONTEXT.md`: context for what this repository represents and what has been intentionally removed
-- `VALIDATION_GUIDE.md`: lightweight manual validation workflow for the canonical examples and solver outputs
-
-## What Was Left Out
-
-The following content was intentionally excluded from the public release:
-
-- manuscript-specific batch orchestration
-- validation plans tied to one experimental study
-- archived backups and duplicate `Finished Files` folders
-- generated output folders and saved result snapshots
-- one-off experiment directories whose main value is historical context rather than reusable functionality
-
-This is a scope decision, not a claim that the removed content is unimportant. That content simply does not belong in the first pass of a general-purpose public repository.
-
-## Folder Layout
-
-```text
-ultrafast-laser-ttm-toolbox/
-  src/              % reusable solver functions
-  examples/         % editable single-run examples
-  scripts/
-    README.md       % script-level entry point guide
-    Verify_Public_Repo_Smoke.m
-    batch/          % reusable batch entry points
-  docs/             % repository context and publishing notes
-  outputs/          % default destination for generated results
-```
-
-All scripts write default results into `outputs/` at the repository root rather than into the original local workspace layout.
-
-## How To Start
-
-### MATLAB setup
-
-1. Open MATLAB with this folder as the working directory.
-2. Add the solver folder to the path:
+1. Clone the repository and open MATLAB with the repo root as the working directory.
+2. Add the solver folder to the path and run a baseline example:
 
 ```matlab
 addpath(genpath('src'))
+run('examples/Example_Surface_Point_Baseline.m')
 ```
 
-3. Run one of the main entry points below.
+Or call a solver directly with your own parameters:
 
-### Suggested first runs
+```matlab
+addpath(genpath('src'))
 
-- `examples/Example_Surface_Point_Baseline` for the simplest starting case
-- `examples/Example_Depth_Profile_Baseline` for the main 1D depth model
-- `examples/Example_Radial_Profile_Baseline` when the main question is radial spread
-- `Single_Pulse_Visualizer()` for early-time pulse behavior and figures
-- `examples/Example_Scanning_Beam_Baseline` for a simple moving-beam example
-- `Batch_Depth_Profile` for a small multi-case batch run
+cfg = struct();
+cfg.material    = 'W';            % tungsten preset ('Cu', 'Au', 'Al', 'custom')
+cfg.Pavg        = 10;             % average power [W]
+cfg.spotRadius  = 100e-6;         % 1/e^2 spot radius [m]
+cfg.f_rep       = 5e6;            % repetition rate [Hz]
+cfg.tau_FWHM    = 500e-15;        % pulse width, FWHM [s]
+cfg.simDuration = 50 / cfg.f_rep; % simulate 50 pulses
 
-### Parameter editing model
+results = Surface_Point_Solver(cfg);
+```
 
-The repository currently uses a mixed style:
+Every run writes its text output under `outputs/` and returns a `results` struct you can inspect or post-process.
 
-- some files are function-based and accept a config struct
-- some files are script-style entry points with editable input sections near the top
+**Suggested progression:**
 
-The fastest way to explore is often to edit the user input block in a script. Structured automation is usually easiest through the function-based solvers.
+1. `examples/Example_Surface_Point_Baseline.m` for the simplest pulse-accumulation case
+2. `examples/Example_Depth_Profile_Baseline.m` for the main 1D depth-resolved model
+3. `examples/Example_Radial_Profile_Baseline.m` for radial spread under a Gaussian spot
+4. `examples/Example_Scanning_Beam_Baseline.m` for a moving-beam process
+5. `scripts/batch/` runners once single cases behave as expected
 
-## Solver Interface Matrix
+The [project wiki](https://github.com/dfieser/ultrafast-laser-ttm-toolbox/wiki) has a full getting-started walkthrough, a solver-by-solver reference with every config field, and notes on the model physics.
 
-| Solver | File | Primary interface | Returns results struct | Common contract fields | Best use |
-| --- | --- | --- | --- | --- | --- |
-| Surface point | `src/Surface_Point_Solver.m` | `cfg` struct | yes | `solver`, `solverId`, `contractVersion`, `material`, `outputFile`, `outputDir`, `inputConfig` | fastest 0D pulse-accumulation studies |
-| Depth profile | `src/Depth_Profile_Solver.m` | `cfg` struct | yes | `solver`, `solverId`, `contractVersion`, `material`, `nPulses`, `wallTime_s`, `outputFile`, `outputDir`, `inputConfig` | main 1D depth-resolved multi-pulse workflow |
-| Radial profile | `src/Radial_Profile_Solver.m` | `cfg` struct | yes | `solver`, `solverId`, `contractVersion`, `material`, `nPulses`, `wallTime_s`, `outputFile`, `outputDir`, `inputConfig` | radial spread and footprint studies |
-| Single pulse | `src/Single_Pulse_Visualizer.m` | `cfg` struct | yes | `solver`, `solverId`, `contractVersion`, `material`, `wallTime_s`, `outputFile`, `outputDir`, `inputConfig` | early-time single-pulse inspection |
-| Inversion analysis | `src/Inversion_Quantifier.m` | `cfg` struct | yes | `solver`, `solverId`, `contractVersion`, `material`, `nPulses`, `wallTime_s`, `outputFile`, `outputDir`, `depthOutputFile` | per-pulse inversion statistics |
-| Scanning beam | `src/Scanning_Beam_Solver.m` | `params` struct plus optional `outputDir`, `savePlots` | yes | `solver`, `solverId`, `contractVersion`, `material`, `nPulses`, `wallTime_s`, `outputFile`, `outputDir`, `inputConfig` | moving-beam surface scan modeling |
+## Solvers
 
-## Common Result Contract
+| Solver | File | What it computes | Best use |
+| --- | --- | --- | --- |
+| Surface point | [src/Surface_Point_Solver.m](src/Surface_Point_Solver.m) | 0D electron and lattice temperatures at the surface, with inter-pulse depth diffusion | fastest pulse-accumulation studies and sweeps |
+| Depth profile | [src/Depth_Profile_Solver.m](src/Depth_Profile_Solver.m) | 1D depth-resolved Te(z,t) and Tl(z,t), per-pulse peaks, inversion metrics | main multi-pulse workflow; resolves the surface inversion |
+| Radial profile | [src/Radial_Profile_Solver.m](src/Radial_Profile_Solver.m) | radial surface temperature under a Gaussian spot | melt-radius and footprint studies |
+| Single pulse | [src/Single_Pulse_Visualizer.m](src/Single_Pulse_Visualizer.m) | one pulse with spatial snapshots at chosen delays | early-time inspection and teaching figures |
+| Inversion analysis | [src/Inversion_Quantifier.m](src/Inversion_Quantifier.m) | per-pulse inversion magnitude, onset, and duration statistics | quantifying the Tl > Te inversion across pulses |
+| Scanning beam | [src/Scanning_Beam_Solver.m](src/Scanning_Beam_Solver.m) | 2D surface temperature under a moving beam | translating stationary results to a scanned process |
 
-The solvers do not return identical full payloads. They do share a minimal result contract, which makes scripting and agent-driven tooling more reliable.
+All six accept a config struct (`cfg`, or `params` for the scanning solver) and return a results struct. Shared result fields across solvers: `solver`, `solverId`, `contractVersion`, `material`, `outputFile`, `outputDir`, and `inputConfig`, plus `nPulses` and `wallTime_s` where meaningful. The machine-readable contract lives in [docs/RESULT_CONTRACT_SCHEMA.json](docs/RESULT_CONTRACT_SCHEMA.json).
 
-Fields you can expect on the main solver entry points:
+## Repository Layout
 
-- `solver`: human-readable solver label
-- `solverId`: stable machine-friendly identifier
-- `contractVersion`: current shared result-contract version
-- `material`: active material preset or mode
-- `outputFile`: primary text output path when one is written
-- `outputDir`: output folder path
-- `inputConfig`: input struct used to invoke the solver
+```text
+ultrafast-laser-ttm-toolbox/
+  src/              reusable solver functions
+  examples/         editable single-run baseline scripts
+  scripts/
+    Verify_Public_Repo_Smoke.m   runtime smoke test
+    batch/          reusable multi-case batch runners
+  docs/             documentation, figures, and curation notes
+  outputs/          default destination for generated results (untracked)
+```
 
-Additional common fields appear where they are physically meaningful, especially `nPulses` and `wallTime_s`.
+## Documentation
 
-## Recommended Workflow
+- [Project wiki](https://github.com/dfieser/ultrafast-laser-ttm-toolbox/wiki): getting started, solver reference, model background, batch workflows, and FAQ
+- [examples/README.md](examples/README.md): example selection and editing pattern
+- [scripts/README.md](scripts/README.md): smoke test and batch entry points
+- [docs/VALIDATION_GUIDE.md](docs/VALIDATION_GUIDE.md): manual validation workflow
+- [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md) and [docs/REPOSITORY_NOTES.md](docs/REPOSITORY_NOTES.md): repository scope and curation history
+- [AGENTS.md](AGENTS.md) and [docs/AGENT_QUICKSTART.md](docs/AGENT_QUICKSTART.md): guidance for coding agents, which this repository supports as a design goal
 
-For a new user, the most sensible progression is:
+## How to Cite
 
-1. Run `examples/Example_Surface_Point_Baseline` to confirm the environment and inspect basic pulse behavior.
-2. Move to `examples/Example_Depth_Profile_Baseline` for depth-resolved multi-pulse accumulation.
-3. Use `examples/Example_Radial_Profile_Baseline` if the main question is radial spread or footprint.
-4. Use `Scanning_Beam_Solver` or `examples/Example_Scanning_Beam_Baseline` for translating stationary heating logic into a moving-laser process.
-5. Use the batch runners only after you understand the single-case behavior.
+If this toolbox contributes to published work, please cite the article:
 
-## Design Context
+```bibtex
+@article{fieser2026twostage,
+  author    = {Fieser, David and Dewanjee, Unmanaa Nileen and Hu, Anming},
+  title     = {A Computationally Efficient Two-Stage Two-Temperature Model for
+               Multi-pulse Femtosecond Laser Heat Accumulation in Tungsten},
+  journal   = {Journal of Materials Engineering and Performance},
+  publisher = {Springer},
+  year      = {2026},
+  doi       = {10.1007/s11665-026-14738-6},
+}
+```
 
-The repository is broader than the manuscript that motivated some of the original work. The intent is not to freeze the code around one experiment, one material, or one laser system. The current defaults reflect the original development history. The solver concepts apply to broader pulsed-laser thermal studies, provided the underlying assumptions remain appropriate.
+To cite the software itself, use the version DOI from the Zenodo record (concept DOI [10.5281/zenodo.20389305](https://doi.org/10.5281/zenodo.20389305) always resolves to the latest release) or the metadata in [CITATION.cff](CITATION.cff):
 
-Areas that are most likely to need user adaptation include:
+```bibtex
+@software{fieser_ttm_toolbox,
+  author = {Fieser, David},
+  title  = {Ultrafast Laser TTM Toolbox},
+  year   = {2026},
+  doi    = {10.5281/zenodo.20389305},
+  url    = {https://github.com/dfieser/ultrafast-laser-ttm-toolbox},
+}
+```
 
-- material properties and presets
-- optical absorption assumptions
-- pulse profile and repetition rate ranges
-- diffusion-domain sizing
-- output naming and metadata conventions
+**Title note:** some records, including the NSF award listing, cite this article under its earlier working title "A Computationally Efficient Analytic Two-Temperature Model for Multi-Pulse Femtosecond Laser Heat Accumulation in Metals: Application to Tungsten." The title changed shortly before publication. Both titles refer to the same article, DOI [10.1007/s11665-026-14738-6](https://doi.org/10.1007/s11665-026-14738-6).
 
-## Outputs And Reproducibility
+## Versioning and Releases
 
-The scripts write generated files to `outputs/` by default. The repository keeps that folder because the scripts expect a writable destination, but version control excludes the generated results themselves.
-
-Future cleanup passes should likely add:
-
-- a small set of canonical example cases
-- a concise result interpretation guide
-- stronger input validation for public users
-
-## Versioning
-
-The version number lives in one place: the `VERSION` file at the repository root. `CITATION.cff` and `.zenodo.json` must state the same version, and the release workflow checks that they do. In MATLAB, `Toolbox_Version()` returns the same string.
-
-To publish a new version:
-
-1. Update `VERSION`, the `version` fields in `CITATION.cff` and `.zenodo.json`, and `date-released` in `CITATION.cff`.
-2. Push to `main`.
-
-The workflow in `.github/workflows/release.yml` then tags the commit and creates a GitHub release. Zenodo archives the release and mints a new version DOI automatically.
+The `VERSION` file at the repository root is the single source of truth (also returned by `Toolbox_Version()` in MATLAB). `CITATION.cff` and `.zenodo.json` must state the same version; the release workflow checks this. Bumping `VERSION` on `main` tags the commit, creates a GitHub release, and Zenodo archives it under a new version DOI. See [.github/workflows/release.yml](.github/workflows/release.yml).
 
 ## License
 
-This repository is released under the MIT License. See `LICENSE`.
-
-## Citation
-
-If this repository contributes to published work, please cite the software record in `CITATION.cff`.
-
-- Concept DOI (always resolves to the latest release): `10.5281/zenodo.20389305`
-- Each GitHub release receives its own version DOI on Zenodo.
+Released under the MIT License. See [LICENSE](LICENSE).
 
 ## Acknowledgments and Funding
 
@@ -226,19 +194,4 @@ Support for the Center for Materials Processing from the State of Tennessee and 
 
 ## Contributing
 
-For small fixes, documentation improvements, and workflow polish, see `CONTRIBUTING.md`.
-
-## Public-Release Caveats
-
-- The defaults are tungsten-focused and reflect the development history of the project.
-- Naming is still partly shaped by the original research workflow rather than by a polished public API.
-- Some files under `examples/` are intentionally user-edited entry points rather than polished software interfaces.
-- MATLAB editor diagnostics currently report a few unused-variable and formatting warnings in the solver files. Fixing them was not part of this repository-organization pass.
-
-## Related Documentation
-
-- Curation history for this repository: `docs/REPOSITORY_NOTES.md` and `docs/PROJECT_CONTEXT.md`
-- Example selection and starter workflows: `examples/README.md`
-- Validation workflow: `docs/VALIDATION_GUIDE.md`
-- Agent-specific editing and maintenance guidance: `AGENTS.md`, `docs/AGENT_QUICKSTART.md`, and `docs/RESULT_CONTRACT_SCHEMA.json`
-- Citation and reuse metadata: `CITATION.cff`, `LICENSE`, and `CONTRIBUTING.md`
+Bug fixes, portability improvements, and documentation polish are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for scope guidance.

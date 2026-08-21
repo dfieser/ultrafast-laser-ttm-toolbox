@@ -86,7 +86,7 @@ The repository is published at `https://github.com/dfieser/ultrafast-laser-ttm-t
 This repository is currently best suited for:
 
 - researchers comfortable editing MATLAB scripts
-- users exploring pulsed-laser thermal modeling rather than turnkey software
+- users exploring pulsed-laser thermal modeling rather than packaged software
 - collaborators who need the solver logic more than a polished GUI or packaged toolbox
 
 It is not yet optimized for a beginner who expects a fully packaged software product.

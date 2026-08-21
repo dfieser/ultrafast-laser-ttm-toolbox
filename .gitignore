@@ -1,3 +1,12 @@
+# Generated results
 /outputs/*
 !/outputs/.gitkeep
 !/outputs/README.md
+
+# MATLAB editor backup and autosave files
+*.asv
+*.m~
+
+# OS cruft
+.DS_Store
+Thumbs.db

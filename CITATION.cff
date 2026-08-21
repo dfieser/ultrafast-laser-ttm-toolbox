@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this repository in published work, please cite it using this metadata."
+message: "If you use this software, please cite the article it implements (preferred-citation) and, where appropriate, the software record below."
 title: "Ultrafast Laser TTM Toolbox"
 type: software
 authors:
@@ -21,6 +21,26 @@ keywords:
   - "MATLAB"
   - "two-temperature model"
   - "ultrafast laser"
+  - "femtosecond laser"
   - "pulsed laser"
   - "thermal modeling"
+  - "heat accumulation"
   - "heat transfer"
+  - "tungsten"
+preferred-citation:
+  type: article
+  title: "A Computationally Efficient Two-Stage Two-Temperature Model for Multi-pulse Femtosecond Laser Heat Accumulation in Tungsten"
+  authors:
+    - family-names: "Fieser"
+      given-names: "David"
+      orcid: "https://orcid.org/0009-0007-5754-4331"
+    - family-names: "Dewanjee"
+      given-names: "Unmanaa Nileen"
+    - family-names: "Hu"
+      given-names: "Anming"
+  journal: "Journal of Materials Engineering and Performance"
+  year: 2026
+  month: 8
+  doi: "10.1007/s11665-026-14738-6"
+  publisher:
+    name: "Springer"

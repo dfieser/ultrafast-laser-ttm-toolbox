@@ -22,6 +22,11 @@
   ],
   "related_identifiers": [
     {
+      "identifier": "10.1007/s11665-026-14738-6",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-article"
+    },
+    {
       "identifier": "https://github.com/dfieser/ultrafast-laser-ttm-toolbox",
       "relation": "isSupplementTo",
       "resource_type": "software"

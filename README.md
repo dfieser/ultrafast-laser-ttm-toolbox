@@ -22,7 +22,7 @@ The toolbox implements and generalizes the model published in:
 The defaults reflect the tungsten work in the paper, but material presets (W, Cu, Au, Al) and a `custom` mode support other metals, pulse widths, spot sizes, repetition rates, and scanning conditions.
 
 > [!NOTE]
-> **No MATLAB? Use the Python port.** All six solvers are also available in Python as [ultrafast-laser-ttm-py](https://github.com/dfieser/ultrafast-laser-ttm-py) (package `laserttm`), validated solver-by-solver against this reference implementation. This MATLAB repository is the paper's reference implementation and is maintained in a stable, reproducibility-first mode; active development continues in the Python port.
+> **This project is continued in Python at [ultrafast-laser-ttm-py](https://github.com/dfieser/ultrafast-laser-ttm-py).** All six solvers are available there as the `laserttm` package — no MATLAB required — validated solver-by-solver against this reference implementation, and new development happens in that repository. This MATLAB repository remains the paper's reference implementation, maintained in a stable, reproducibility-first mode.
 
 ## Highlights
 

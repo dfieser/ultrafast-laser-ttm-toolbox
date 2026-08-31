@@ -21,6 +21,9 @@ The toolbox implements and generalizes the model published in:
 
 The defaults reflect the tungsten work in the paper, but material presets (W, Cu, Au, Al) and a `custom` mode support other metals, pulse widths, spot sizes, repetition rates, and scanning conditions.
 
+> [!NOTE]
+> **No MATLAB? Use the Python port.** All six solvers are also available in Python as [ultrafast-laser-ttm-py](https://github.com/dfieser/ultrafast-laser-ttm-py) (package `laserttm`), validated solver-by-solver against this reference implementation. This MATLAB repository is the paper's reference implementation and is maintained in a stable, reproducibility-first mode; active development continues in the Python port.
+
 ## Highlights
 
 - **Two-stage multi-pulse strategy.** Each pulse period splits into a full electron-lattice TTM solve (`ode15s`) during the pulse and relaxation, then Crank-Nicolson thermal diffusion for the inter-pulse gap. The baseline 50-pulse accumulation run finishes in under a second.
